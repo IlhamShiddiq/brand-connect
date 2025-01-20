@@ -108,4 +108,21 @@ class OutletController extends Controller
             'message' => 'Outlet deleted successfully',
         ], 200);
     }
+
+    /**
+     * Find the nearest outlet
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function findTheNearest(Request $request): JsonResponse
+    {
+        $outlet = $this->outletRepo->findTheNearest($request);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Outlet retrieved successfully',
+            'data' => $outlet,
+        ]);
+    }
 }

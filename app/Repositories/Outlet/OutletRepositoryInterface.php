@@ -26,6 +26,14 @@ interface OutletRepositoryInterface
     public function findOrFail(string $outletId): Outlet;
 
     /**
+     * Find the nearest outlet
+     *
+     * @param Request $request
+     * @return Outlet|null
+     */
+    public function findTheNearest(Request $request): ?Outlet;
+
+    /**
      * Store a new outlet
      *
      * @param Request $request

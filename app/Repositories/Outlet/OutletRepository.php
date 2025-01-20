@@ -54,6 +54,27 @@ class OutletRepository implements OutletRepositoryInterface
     }
 
     /**
+     * Find the nearest outlet
+     *
+     * @param Request $request
+     * @return Outlet|null
+     */
+    public function findTheNearest(Request $request): ?Outlet
+    {
+        $userLat = $request->latitude;
+        $userLong = $request->longitude;
+
+        return $this->outletModel
+            ->selectRaw(
+                'outlets.*,
+                (6371 * acos(cos(radians(?)) * cos(radians(latitude))
+                    * cos(radians(longitude) - radians(?))
+                    + sin(radians(?)) * sin(radians(latitude)))) AS distance',
+                [$userLat, $userLong, $userLat]
+            )->orderBy('distance')->first();
+    }
+
+    /**
      * Store a new outlet
      *
      * @param Request $request

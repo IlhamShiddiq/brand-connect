@@ -19,6 +19,7 @@ Route::prefix('brands')->group(function () {
 
 Route::prefix('outlets')->group(function () {
     Route::get('/', [OutletController::class, 'index']);
+    Route::get('/nearest', [OutletController::class, 'findTheNearest']);
     Route::get('/{outletId}', [OutletController::class, 'show']);
     Route::post('/', [OutletController::class, 'store']);
     Route::put('/{outletId}', [OutletController::class, 'update']);
