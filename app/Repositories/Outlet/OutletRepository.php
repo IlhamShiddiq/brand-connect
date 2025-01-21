@@ -54,7 +54,7 @@ class OutletRepository implements OutletRepositoryInterface
     }
 
     /**
-     * Find the nearest outlet
+     * Find the nearest outlet (below 25 kilometers))
      *
      * @param Request $request
      * @return Outlet|null
@@ -64,14 +64,19 @@ class OutletRepository implements OutletRepositoryInterface
         $userLat = $request->latitude;
         $userLong = $request->longitude;
 
+        // This is an alternative way to calculate distance between 2 coordinates through SQL query
+        // The result will be in kilometers
+        $distanceFormula = '(6371 * acos(cos(radians(?)) * cos(radians(latitude))
+            * cos(radians(longitude) - radians(?))
+            + sin(radians(?)) * sin(radians(latitude))))';
+
         return $this->outletModel
             ->selectRaw(
-                'outlets.*,
-                (6371 * acos(cos(radians(?)) * cos(radians(latitude))
-                    * cos(radians(longitude) - radians(?))
-                    + sin(radians(?)) * sin(radians(latitude)))) AS distance',
+                "outlets.*, $distanceFormula AS distance",
                 [$userLat, $userLong, $userLat]
-            )->orderBy('distance')->first();
+            )
+            ->whereRaw("$distanceFormula <= 25.0", [$userLat, $userLong, $userLat])
+            ->orderBy('distance')->first();
     }
 
     /**

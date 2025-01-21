@@ -67,11 +67,11 @@ class OutletFeatureTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
+     * Test nearest outlet (below 25 kilometers)
      *
      * @return void
      */
-    public function testNearestOutlet(): void
+    public function testNearestOutletBelow25(): void
     {
         $userLoggedIn = User::query()->whereEmail('admin@example.com')->first();
         $response = $this->actingAs($userLoggedIn)
@@ -103,6 +103,33 @@ class OutletFeatureTest extends TestCase
                     'updated_at',
                     'distance'
                 ]
+            ]);
+    }
+
+    /**
+     * Test nearest outlet (above 25 kilometers)
+     *
+     * @return void
+     */
+    public function testNearestOutletAbove25(): void
+    {
+        $userLoggedIn = User::query()->whereEmail('admin@example.com')->first();
+        $response = $this->actingAs($userLoggedIn)
+            ->json(
+                'GET',
+                '/api/outlets/nearest',
+                [
+                    'latitude' => -6.082164994701605,
+                    'longitude' => 106.39212165429926
+                ]
+            );
+
+        $response->assertOk()
+            ->assertJsonPath('data.name', null)
+            ->assertJsonStructure([
+                'status',
+                'message',
+                'data',
             ]);
     }
 }
