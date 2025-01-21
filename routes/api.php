@@ -15,4 +15,5 @@ Route::prefix('brands')->group(function () {
 
 Route::prefix('outlets')->group(function () {
     Route::get('/', [OutletController::class, 'list']);
+    Route::get('/nearest', [OutletController::class, 'findTheNearest']);
 });
