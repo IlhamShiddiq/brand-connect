@@ -28,6 +28,7 @@ class Brand extends Model
         parent::boot();
 
         static::creating(function ($brand) {
+            $brand->id = (string) Str::uuid();
             $brand->slug = Str::slug($brand->name) . '-' . Str::random(5);
         });
 
