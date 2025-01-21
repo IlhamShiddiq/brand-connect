@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BrandRequest;
 use App\Repositories\Brand\BrandRepositoryInterface;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class BrandController extends Controller
 {
@@ -27,85 +30,86 @@ class BrandController extends Controller
      * Get all brands
      *
      * @param Request $request
-     * @return JsonResponse
+     * @return Response
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request): Response
     {
-        $brands = $this->brandRepo->index($request);
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'Brands retrieved successfully',
-            'data' => $brands,
-        ]);
+        return Inertia::render('Brand/Index');
     }
 
     /**
-     * Show a brand
+     * Get all brands
      *
-     * @param string $brandId
+     * @param Request $request
      * @return JsonResponse
      */
-    public function show(string $brandId): JsonResponse
+    public function list(Request $request): JsonResponse
     {
-        $brand = $this->brandRepo->findOrFail($brandId);
+        $brands = $this->brandRepo->index($request);
+        return response()->json($brands);
+    }
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'Brand retrieved successfully',
-            'data' => $brand,
-        ]);
+    /**
+     * Create new brand
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function create(Request $request): Response
+    {
+        return Inertia::render('Brand/Create');
     }
 
     /**
      * Store a new brand
      *
      * @param BrandRequest $request
-     * @return JsonResponse
+     * @return RedirectResponse
      */
-    public function store(BrandRequest $request): JsonResponse
+    public function store(BrandRequest $request): RedirectResponse
     {
-        $newBrand = $this->brandRepo->store($request);
+        $this->brandRepo->store($request);
+        return redirect()->route('brand.index');
+    }
 
-        return response()->json([
-            'status' => 201,
-            'message' => 'Brand created successfully',
-            'data' => $newBrand,
-        ], 201);
+    /**
+     * Edit brand
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function edit(Request $request): Response
+    {
+        $brand = $this->brandRepo->findOrFail($request->id);
+        return Inertia::render('Brand/Edit', [
+            'brand' => $brand,
+        ]);
     }
 
     /**
      * Update a brand
      *
      * @param BrandRequest $request
-     * @param string $brandId
-     * @return JsonResponse
+     * @param string $id
+     * @return RedirectResponse
      */
-    public function update(BrandRequest $request, string $brandId): JsonResponse
+    public function update(BrandRequest $request, string $id): RedirectResponse
     {
-        $brand = $this->brandRepo->findOrFail($brandId);
-        $updatedBrand = $this->brandRepo->update($request, $brand);
+        $brand = $this->brandRepo->findOrFail($id);
+        $this->brandRepo->update($request, $brand);
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'Brand updated successfully',
-            'data' => $updatedBrand,
-        ], 200);
+        return redirect()->route('brand.index');
     }
 
     /**
      * Destroy a brand
      *
-     * @param string $brandId
-     * @return JsonResponse
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function destroy(string $brandId): JsonResponse
+    public function destroy(Request $request): RedirectResponse
     {
-        $this->brandRepo->destroy($brandId);
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'Brand deleted successfully',
-        ], 200);
+        $this->brandRepo->destroy($request->brandId);
+        return redirect()->route('brand.index');
     }
 }

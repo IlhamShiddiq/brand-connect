@@ -9,12 +9,8 @@ Route::prefix('auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
 });
 
-Route::prefix('brands')->middleware('auth:sanctum')->group(function () {
-    Route::get('/', [BrandController::class, 'index']);
-    Route::get('/{brandId}', [BrandController::class, 'show']);
-    Route::post('/', [BrandController::class, 'store']);
-    Route::put('/{brandId}', [BrandController::class, 'update']);
-    Route::delete('/{brandId}', [BrandController::class, 'destroy']);
+Route::prefix('brands')->group(function () {
+    Route::get('/', [BrandController::class, 'list']);
 });
 
 Route::prefix('outlets')->middleware('auth:sanctum')->group(function () {

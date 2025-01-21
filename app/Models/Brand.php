@@ -3,14 +3,15 @@
 namespace App\Models;
 
 use App\Traits\UuidModel;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Brand extends Model
 {
-    use UuidModel;
+    use HasFactory, UuidModel;
 
-    public static $defaultPerPage = 15;
+    public static $defaultPerPage = 10;
 
     protected $fillable = [
         'name',
