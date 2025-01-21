@@ -1,7 +1,7 @@
 <script setup>
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import TablePagination from "@/Pages/Brand/TablePagination.vue";
+import TablePagination from "@/Pages/Outlet/TablePagination.vue";
 import { Head } from "@inertiajs/vue3";
 import AddButton from "@/Components/AddButton.vue";
 </script>
@@ -14,7 +14,7 @@ import AddButton from "@/Components/AddButton.vue";
             <h2
                 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
             >
-                Brand List
+                Outlet List
             </h2>
         </template>
 
@@ -24,7 +24,7 @@ import AddButton from "@/Components/AddButton.vue";
                     class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800"
                 >
                     <div class="py-5">
-                        <AddButton :href="route('brand.create')">Add Data</AddButton>
+                        <AddButton :href="route('outlet.create')">Add Data</AddButton>
                     </div>
 
                     <TablePagination></TablePagination>

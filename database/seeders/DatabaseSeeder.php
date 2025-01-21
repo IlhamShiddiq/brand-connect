@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Brand;
+use App\Models\Outlet;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,6 +17,9 @@ class DatabaseSeeder extends Seeder
     {
         // Brand seeder
         Brand::factory()->count(15)->create();
+
+        // Outlet seeder
+        Outlet::factory()->count(15)->create();
 
         // User seeder
         User::create([

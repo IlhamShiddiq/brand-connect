@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\OutletController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,15 @@ Route::middleware('auth')->group(function () {
         Route::post('/', [BrandController::class, 'store'])->name('brand.store');
         Route::put('/{id}', [BrandController::class, 'update'])->name('brand.update');
         Route::delete('/', [BrandController::class, 'destroy'])->name('brand.destroy');
+    });
+
+    Route::prefix('outlets')->group(function () {
+        Route::get('/', [OutletController::class, 'index'])->name('outlet.index');
+        Route::get('/create', [OutletController::class, 'create'])->name('outlet.create');
+        Route::get('/edit/{id}', [OutletController::class, 'edit'])->name('outlet.edit');
+        Route::post('/', [OutletController::class, 'store'])->name('outlet.store');
+        Route::put('/{id}', [OutletController::class, 'update'])->name('outlet.update');
+        Route::delete('/', [OutletController::class, 'destroy'])->name('outlet.destroy');
     });
 });
 

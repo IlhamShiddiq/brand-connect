@@ -13,11 +13,6 @@ Route::prefix('brands')->group(function () {
     Route::get('/', [BrandController::class, 'list']);
 });
 
-Route::prefix('outlets')->middleware('auth:sanctum')->group(function () {
-    Route::get('/', [OutletController::class, 'index']);
-    Route::get('/nearest', [OutletController::class, 'findTheNearest']);
-    Route::get('/{outletId}', [OutletController::class, 'show']);
-    Route::post('/', [OutletController::class, 'store']);
-    Route::put('/{outletId}', [OutletController::class, 'update']);
-    Route::delete('/{outletId}', [OutletController::class, 'destroy']);
+Route::prefix('outlets')->group(function () {
+    Route::get('/', [OutletController::class, 'list']);
 });

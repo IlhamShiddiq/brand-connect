@@ -30,16 +30,7 @@ class OutletRepository implements OutletRepositoryInterface
      */
     public function index(Request $request): Collection|LengthAwarePaginator
     {
-        return $this->outletModel
-            ->when(
-                $request->paginate,
-                function ($q) use ($request) {
-                    return $q->paginate(intval($request->per_page) ?? Outlet::$defaultPerPage);
-                },
-                function ($q) {
-                    return $q->get();
-                }
-            );
+        return $this->outletModel->with(['brand'])->paginate(Outlet::$defaultPerPage);
     }
 
     /**

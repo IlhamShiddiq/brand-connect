@@ -39,6 +39,13 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Brand
                                 </NavLink>
+
+                                <NavLink
+                                    :href="route('outlet.index')"
+                                    :active="route().current('outlet.index')"
+                                >
+                                    Outlet
+                                </NavLink>
                             </div>
                         </div>
 

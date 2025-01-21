@@ -30,7 +30,7 @@ class BrandRepository implements BrandRepositoryInterface
      */
     public function index(Request $request): Collection|LengthAwarePaginator
     {
-        return $this->brandModel->paginate(Brand::$defaultPerPage);
+        return $this->brandModel->withCount('outlets')->paginate(Brand::$defaultPerPage);
     }
 
     /**

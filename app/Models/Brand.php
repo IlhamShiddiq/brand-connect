@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\UuidModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class Brand extends Model
@@ -38,5 +39,17 @@ class Brand extends Model
                 $brand->slug = Str::slug($brand->name) . '-' . Str::random(5);
             }
         });
+    }
+
+    // Relation
+
+    /**
+     * Outlets
+     *
+     * @return HasMany
+     */
+    public function outlets(): HasMany
+    {
+        return $this->hasMany(Outlet::class, 'brand_id');
     }
 }

@@ -37,7 +37,7 @@ const createBrand = () => {
 </script>
 
 <template>
-    <Head title="Profile" />
+    <Head title="Brand" />
 
     <AuthenticatedLayout>
         <template #header>

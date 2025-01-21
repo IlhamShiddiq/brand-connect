@@ -3,14 +3,16 @@
 namespace App\Models;
 
 use App\Traits\UuidModel;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class Outlet extends Model
 {
-    use UuidModel;
+    use HasFactory, UuidModel;
 
-    public static $defaultPerPage = 15;
+    public static $defaultPerPage = 10;
 
     protected $fillable = [
         'brand_id',
@@ -41,5 +43,17 @@ class Outlet extends Model
                 $outlet->slug = Str::slug($outlet->name) . '-' . Str::random(5);
             }
         });
+    }
+
+    // Relation
+
+    /**
+     * Brand
+     *
+     * @return BelongsTo
+     */
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
 }
