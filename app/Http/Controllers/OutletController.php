@@ -69,7 +69,10 @@ class OutletController extends Controller
      */
     public function create(Request $request): Response
     {
-        $brands = $this->brandRepo->index($request);
+        $brands = $this->brandRepo->index($request->merge([
+            'paginate' => 'false'
+        ]));
+
         return Inertia::render('Outlet/Create', [
             'brands' => $brands,
         ]);

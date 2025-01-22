@@ -98,7 +98,7 @@ const createBrand = () => {
                                     class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 >
                                     <option value="" disabled>Select a brand</option>
-                                    <option v-for="brand in brands.data" :key="brand?.id" :value="brand?.id">
+                                    <option v-for="brand in brands" :key="brand?.id" :value="brand?.id">
                                         {{ brand?.name }}
                                     </option>
                                 </select>
@@ -234,5 +234,8 @@ const createBrand = () => {
 </template>
 
 <style scoped>
-
+select {
+    max-height: 150px;
+    overflow-y: auto;
+}
 </style>
