@@ -39,8 +39,7 @@
 <script setup>
 import { ref } from 'vue';
 import { TailwindPagination } from 'laravel-vue-pagination';
-import { useForm } from "@inertiajs/vue3";
-import { Inertia } from '@inertiajs/inertia';
+import { useForm, router } from "@inertiajs/vue3";
 
 const outlets = ref({});
 const getResults = async (page = 1) => {
@@ -51,7 +50,7 @@ const getResults = async (page = 1) => {
 getResults();
 
 const editOutlet = (id) => {
-    Inertia.visit(route('outlet.edit', id));
+    router.visit(route('outlet.edit', id));
 };
 
 const deleteOutlet = (id) => {

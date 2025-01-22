@@ -21,6 +21,7 @@ class OutletController extends Controller
     /**
      * Constructor
      *
+     * @param BrandRepositoryInterface $brandRepo
      * @param OutletRepositoryInterface $outletRepo
      * @return void
      */
@@ -95,7 +96,9 @@ class OutletController extends Controller
     public function edit(Request $request): Response
     {
         $outlet = $this->outletRepo->findOrFail($request->id);
-        $brands = $this->brandRepo->index($request);
+        $brands = $this->brandRepo->index($request->merge([
+            'paginate' => 'false'
+        ]));
 
         return Inertia::render('Outlet/Edit', [
             'outlet' => $outlet,
