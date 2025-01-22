@@ -16,8 +16,12 @@
                     <td class="px-6 py-4 border-b">{{  brand.description }}</td>
                     <td class="px-6 py-4 border-b">{{  brand.outlets_count }}</td>
                     <td class="px-6 py-4 border-b">
-                        <button @click="editBrand(brand.id)" class="mx-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Edit</button>
-                        <button @click="deleteBrand(brand.id)" class="mx-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-blue-700">Delete</button>
+                        <button @click="editBrand(brand.id)" class="mx-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                            <font-awesome-icon icon="fa-solid fa-pencil" />
+                        </button>
+                        <button @click="deleteBrand(brand.id)" class="mx-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-blue-700">
+                            <font-awesome-icon icon="fa-solid fa-trash" />
+                        </button>
                     </td>
                 </tr>
                 </tbody>

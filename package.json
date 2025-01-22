@@ -19,6 +19,9 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^6.7.2",
+        "@fortawesome/free-solid-svg-icons": "^6.7.2",
+        "@fortawesome/vue-fontawesome": "^3.0.8",
         "@inertiajs/inertia": "^0.11.1",
         "@inertiajs/vue3": "^2.0.2",
         "@vitejs/plugin-vue": "^5.2.1",
