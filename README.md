@@ -8,9 +8,9 @@
 ## Requirements
 Before installing, ensure your environment meets these requirements:
 - **PHP**: ^8.2
-- **Composer**: ^2.5
-- **Node.js**: ^20
-- **NPM**: ^8.x
+- **Composer**: ^2.8
+- **Node.js**: ^22
+- **NPM**: ^10.x
 - **Database**: PostgreSQL
 
 ---
@@ -64,8 +64,57 @@ Follow the steps below to set up the project:
 ---
 
 ## Running Tests
-To ensure the application is working as expected, run the test suite:
+To ensure the application is working as expected, follow these steps to run the test suite:
 
-```bash
-php artisan test
-```
+1. Ensure there is an environment file named `.env.testing`. This file should contain the testing-specific configurations for your application.
+2. Clear the configuration cache by running the following command:
+
+   ```bash
+   php artisan config:clear
+   ```
+
+3. Run the test suite using:
+
+   ```bash
+   php artisan test
+   ```
+
+## API Endpoints
+
+### /api/outlets/nearest
+Retrieve the nearest outlets based on geographical coordinates. 
+
+#### Method:
+`GET`
+
+#### Description:
+This endpoint returns data about outlets located within a radius of 25 kilometers from the given coordinates.
+
+#### Parameters:
+| Name        | Type   | Description                         |
+|-------------|--------|-------------------------------------|
+| `latitude`  | float  | The latitude of the current location. |
+| `longitude` | float  | The longitude of the current location.|
+
+#### Response:
+- **Success (200):**
+  ```json
+  {
+  "status": 200,
+  "message": "Outlet retrieved successfully",
+  "data": {
+    "id": "c58c6b1d-af38-46c1-90e0-c9835b6337d9",
+    "brand_name": "MadeUpBrand",
+    "name": "MadeUpOutlet",
+    "phone_number": "123456",
+    "description": "This is description",
+    "address": "Indonesia",
+    "latitude": "-6.9220926909433730000000",
+    "longitude": "107.5588226737869800000000",
+    "location_distance": "0.1 km"
+  }
+}
+
+#### Notes:
+- Ensure valid latitude and longitude values are provided.
+- Only the nearest outlet within 25 km are included in the response.
