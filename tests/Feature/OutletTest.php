@@ -277,17 +277,14 @@ class OutletTest extends TestCase
                 'message',
                 'data' => [
                     'id',
-                    'brand_id',
+                    'brand_name',
                     'name',
-                    'slug',
                     'phone_number',
                     'description',
                     'address',
                     'latitude',
                     'longitude',
-                    'created_at',
-                    'updated_at',
-                    'distance'
+                    'location_distance',
                 ]
             ]);
     }

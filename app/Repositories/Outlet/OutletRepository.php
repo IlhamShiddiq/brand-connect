@@ -31,7 +31,7 @@ class OutletRepository implements OutletRepositoryInterface
     public function index(Request $request): Collection|LengthAwarePaginator
     {
         return $this->outletModel
-            ->with(['brand'])
+            ->with(['brand:id,name'])
             ->when(
                 $request->paginate === 'false',
                 function ($q) {
@@ -77,6 +77,9 @@ class OutletRepository implements OutletRepositoryInterface
                 [$userLat, $userLong, $userLat]
             )
             ->whereRaw("$distanceFormula <= 25.0", [$userLat, $userLong, $userLat])
+            ->with([
+                'brand:id,name'
+            ])
             ->orderBy('distance')->first();
     }
 

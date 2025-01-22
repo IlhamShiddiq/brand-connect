@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OutletRequest;
+use App\Http\Resources\Outlet\OutletNearestResource;
 use App\Repositories\Brand\BrandRepositoryInterface;
 use App\Repositories\Outlet\OutletRepositoryInterface;
 use Illuminate\Http\JsonResponse;
@@ -142,7 +143,7 @@ class OutletController extends Controller
         return response()->json([
             'status' => HttpResponse::HTTP_OK,
             'message' => 'Outlet retrieved successfully',
-            'data' => $outlet,
+            'data' => $outlet ? OutletNearestResource::make($outlet) : null,
         ]);
     }
 }
