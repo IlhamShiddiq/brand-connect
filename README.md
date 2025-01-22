@@ -63,6 +63,14 @@ Follow the steps below to set up the project:
 
 ---
 
+## Test Account
+To log in and access the application, you can use the following test account credentials:
+
+- **Email:** admin@example.com
+- **Password:** Admin1234!
+
+---
+
 ## Running Tests
 To ensure the application is working as expected, follow these steps to run the test suite:
 
@@ -79,6 +87,8 @@ To ensure the application is working as expected, follow these steps to run the 
    php artisan test
    ```
 
+---
+
 ## API Endpoints
 
 ### /api/outlets/nearest
@@ -88,7 +98,7 @@ Retrieve the nearest outlets based on geographical coordinates.
 `GET`
 
 #### Description:
-This endpoint returns data about outlets located within a radius of 25 kilometers from the given coordinates.
+This endpoint returns data about outlet located within a radius of 25 kilometers from the given coordinates.
 
 #### Parameters:
 | Name        | Type   | Description                         |
