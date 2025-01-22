@@ -52,7 +52,6 @@ class BrandTest extends TestCase
     public function testListBrandPageCanBeDisplayed(): void
     {
         $response = $this->actingAs($this->user)->get('/brands');
-
         $response->assertStatus(Response::HTTP_OK);
     }
 
@@ -64,7 +63,6 @@ class BrandTest extends TestCase
     public function testCreateBrandPageCanBeDisplayed(): void
     {
         $response = $this->actingAs($this->user)->get('/brands/create');
-
         $response->assertStatus(Response::HTTP_OK);
     }
 
@@ -111,7 +109,6 @@ class BrandTest extends TestCase
     {
         $brand = Brand::query()->first();
         $response = $this->actingAs($this->user)->get('/brands/edit/' . $brand->id);
-
         $response->assertStatus(Response::HTTP_OK);
     }
 
@@ -150,11 +147,7 @@ class BrandTest extends TestCase
      */
     public function testBrandCantBeUpdatedErrorValidation(): void
     {
-        $brand = Brand::query()->create([
-            'name' => 'Brand test',
-            'description' => 'Brand test',
-        ]);
-
+        $brand = Brand::query()->first();
         $response = $this->actingAs($this->user)->put('/brands/' . $brand->id, []);
         $response->assertRedirect()->assertSessionHasErrors(['name', 'description']);
     }
@@ -181,5 +174,31 @@ class BrandTest extends TestCase
             ->assertRedirect('/brands');
 
         $this->assertEquals($countBeforeDelete - 1, $countAfterDelete);
+    }
+
+    /**
+     * Test get list brand API
+     *
+     * @return void
+     */
+    public function testGetListBrandApi(): void
+    {
+        $brandCount = Brand::query()->count();
+        $response = $this->actingAs($this->user)
+            ->json(
+                'GET',
+                '/api/brands',
+                [
+                    'paginate' => 'false'
+                ]
+            );
+
+        $response->assertOk()
+            ->assertJsonCount($brandCount, 'data')
+            ->assertJsonStructure([
+                'status',
+                'message',
+                'data',
+            ]);
     }
 }

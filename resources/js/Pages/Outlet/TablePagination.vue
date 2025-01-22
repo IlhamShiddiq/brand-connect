@@ -41,7 +41,7 @@ import { Inertia } from '@inertiajs/inertia';
 const outlets = ref({});
 const getResults = async (page = 1) => {
     const response = await axios.get(`http://localhost:8000/api/outlets?paginate=true&page=${page}`);
-    outlets.value = response.data
+    outlets.value = response.data.data
 }
 
 getResults();

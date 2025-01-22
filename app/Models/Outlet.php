@@ -35,6 +35,7 @@ class Outlet extends Model
         parent::boot();
 
         static::creating(function ($outlet) {
+            $outlet->id = (string) Str::uuid();
             $outlet->slug = Str::slug($outlet->name) . '-' . Str::random(5);
         });
 

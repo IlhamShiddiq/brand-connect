@@ -8,6 +8,7 @@ use App\Repositories\Brand\BrandRepositoryInterface;
 use App\Repositories\Outlet\OutletRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -51,7 +52,11 @@ class OutletController extends Controller
     public function list(Request $request): JsonResponse
     {
         $outlets = $this->outletRepo->index($request);
-        return response()->json($outlets);
+        return response()->json([
+            'status' => HttpResponse::HTTP_OK,
+            'message' => 'Outlets retrieved successfully',
+            'data' => $outlets,
+        ]);
     }
 
     /**
@@ -135,7 +140,7 @@ class OutletController extends Controller
         $outlet = $this->outletRepo->findTheNearest($request);
 
         return response()->json([
-            'status' => 200,
+            'status' => HttpResponse::HTTP_OK,
             'message' => 'Outlet retrieved successfully',
             'data' => $outlet,
         ]);

@@ -41,7 +41,7 @@ import { Inertia } from '@inertiajs/inertia';
 const brands = ref({});
 const getResults = async (page = 1) => {
     const response = await axios.get(`http://localhost:8000/api/brands?paginate=true&page=${page}`);
-    brands.value = response.data
+    brands.value = response.data.data
 }
 
 getResults();
