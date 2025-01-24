@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\UuidModel;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -44,6 +45,30 @@ class Outlet extends Model
                 $outlet->slug = Str::slug($outlet->name) . '-' . Str::random(5);
             }
         });
+    }
+
+    // Scopes
+
+    /**
+     * Get nearest outlet from location scope
+     *
+     * @param Builder $builder
+     * @param string $latitude
+     * @param string $longitude
+     * @return Builder
+     */
+    public function scopeGetNearest(Builder $builder, string $latitude, string $longitude): Builder
+    {
+        $distanceFormula = '(6371 * acos(cos(radians(?)) * cos(radians(latitude))
+            * cos(radians(longitude) - radians(?))
+            + sin(radians(?)) * sin(radians(latitude))))';
+
+        return $builder
+            ->selectRaw(
+                "outlets.*, $distanceFormula AS distance",
+                [$latitude, $longitude, $latitude]
+            )
+            ->whereRaw("$distanceFormula <= 25.0", [$latitude, $longitude, $latitude]);
     }
 
     // Relation

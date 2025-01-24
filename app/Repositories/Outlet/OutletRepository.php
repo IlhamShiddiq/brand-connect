@@ -65,18 +65,8 @@ class OutletRepository implements OutletRepositoryInterface
         $userLat = $request->latitude;
         $userLong = $request->longitude;
 
-        // This is an alternative way to calculate distance between 2 coordinates through SQL query
-        // The result will be in kilometers
-        $distanceFormula = '(6371 * acos(cos(radians(?)) * cos(radians(latitude))
-            * cos(radians(longitude) - radians(?))
-            + sin(radians(?)) * sin(radians(latitude))))';
-
         return $this->outletModel
-            ->selectRaw(
-                "outlets.*, $distanceFormula AS distance",
-                [$userLat, $userLong, $userLat]
-            )
-            ->whereRaw("$distanceFormula <= 25.0", [$userLat, $userLong, $userLat])
+            ->getNearest($userLat, $userLong)
             ->with([
                 'brand:id,name'
             ])
